@@ -28,6 +28,7 @@ from torchvision import transforms
 from PIL import Image
 import requests
 from io import BytesIO
+import streamlit as st
 
 
 
@@ -95,6 +96,10 @@ def predict(model, image_url):
 
 
 
+
+
+
+
 if __name__=="__main__":
 	model=load_model()
 	print("Model loaded")
@@ -136,6 +141,8 @@ if __name__=="__main__":
 	image_url="https://drive.google.com/uc?export=view&id=1MaKJYC1RJdxk9rWNxcdXlgtCE2eLsSGy"	
 	print(predict(model, image_url),"should be monkeypox")
 
+
+	
 
 
 
