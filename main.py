@@ -69,6 +69,7 @@ def predict(model, image_url):
 	pass the model and image url to the function
 	Returns: a list of pox types with decreasing probability
 	'''
+	print("Going to get image")
 	response = requests.get(image_url)
 	print("Obtained response")
 	picture = Image.open(BytesIO(response.content))
