@@ -70,9 +70,12 @@ def predict(model, image_url):
 	Returns: a list of pox types with decreasing probability
 	'''
 	response = requests.get(image_url)
+	print("Obtained response")
 	picture = Image.open(BytesIO(response.content))
+	print("Got image")
 	# Convert the image to grayscale
 	image = data_transform(picture)
+	print("Transformed image")
 
 
 	images=image.reshape(1,1,64,64)
