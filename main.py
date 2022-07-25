@@ -11,7 +11,6 @@ import torch.backends.cudnn as cudnn
 import numpy as np
 import torchvision
 from torchvision import datasets, models, transforms
-import matplotlib.pyplot as plt
 import time
 import os
 
@@ -23,7 +22,7 @@ import torch.nn.functional as F
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
-import matplotlib.pyplot as plt
+
 
 
 from PIL import Image
@@ -48,6 +47,7 @@ data_transform = transforms.Compose([transforms.Grayscale(num_output_channels=1)
 
 def load_model():
 	'''
+
 	load a model 
 	by default it is resnet 18 for now
 	'''
@@ -66,6 +66,7 @@ def load_model():
 
 def predict(model, image_url):
 	'''
+
 	pass the model and image url to the function
 	Returns: a list of pox types with decreasing probability
 	'''
