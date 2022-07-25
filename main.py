@@ -47,6 +47,10 @@ data_transform = transforms.Compose([transforms.Grayscale(num_output_channels=1)
 
 
 def load_model():
+	'''
+	load a model 
+	by default it is resnet 18 for now
+	'''
 
 	model = models.resnet18(pretrained=True)
 	num_ftrs = model.fc.in_features
@@ -61,6 +65,10 @@ def load_model():
 
 
 def predict(model, image_url):
+	'''
+	pass the model and image url to the function
+	Returns: a list of pox types with decreasing probability
+	'''
 	response = requests.get(image_url)
 	picture = Image.open(BytesIO(response.content))
 	# Convert the image to grayscale
