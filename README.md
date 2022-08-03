@@ -31,6 +31,7 @@ predictions=pox_detection.predict(model,image_url)
 print(predictions.value)
 ```
 
+
 The output is going to be a list of pox types. The first item in the list has the highest probability of occurring.
 ```
 ['Monkeypox', 'Chickenpox', 'Measles', 'Normal']

@@ -29,6 +29,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import streamlit as st
+import validators
 
 
 
@@ -48,11 +49,9 @@ data_transform = transforms.Compose([transforms.Grayscale(num_output_channels=1)
 
 def load_model():
 	'''
-
 	load a model 
 	by default it is resnet 18 for now
 	'''
-
 	model = models.resnet18(pretrained=True)
 	num_ftrs = model.fc.in_features
 	model.fc = nn.Linear(num_ftrs, len(classes))
@@ -67,27 +66,24 @@ def load_model():
 
 def predict(model, image_url):
 	'''
-
 	pass the model and image url to the function
 	Returns: a list of pox types with decreasing probability
 	'''
-	print("Going to get image")
-	response = requests.get(image_url)
-	print("Obtained response")
-	picture = Image.open(BytesIO(response.content))
-	print("Got image")
-	# Convert the image to grayscale
+	if validators.url(image_url) is True:	
+		response = requests.get(image_url)		
+		picture = Image.open(BytesIO(response.content))
+	else:
+		picture = Image.open(image_url)
+	# Convert the image to grayscale and other transforms
 	image = data_transform(picture)
-	print("Transformed image")
-
-
+	# store in a list of images
 	images=image.reshape(1,1,64,64)
-
 	new_images = images.repeat(1, 3, 1, 1)
 	outputs=model(new_images)
-
+	# get prediction
 	_, predicted = torch.max(outputs, 1)
 	ranked_labels=torch.argsort(outputs,1)[0]
+	# get all classes in order of probability
 	probable_classes=[]
 	for label in ranked_labels:
 	    probable_classes.append(classes[label.numpy()])
@@ -106,6 +102,9 @@ if __name__=="__main__":
 	# normal
 	image_url="https://drive.google.com/uc?export=view&id=14sF_FaFvfYzrQCCQRX6IK87aBPFerfWb"	
 	print(predict(model, image_url),"should be normal")
+
+	image_url="/Users/ashhadulislam/projects/other_misc/hackerEarth/daisi/some_pox_data/Monkeypox-dataset-2022-master/arranged/Normal/normalgray_aug14.jpg"	
+	print(predict(model, image_url),"should be normal")	
 
 	# chicken pox
 	image_url="https://drive.google.com/uc?export=view&id=1nwBZQb0R0L4TMuk_9PaG9Hh2LhWRYz5R"	
@@ -140,6 +139,11 @@ if __name__=="__main__":
 	# monkey pox
 	image_url="https://drive.google.com/uc?export=view&id=1MaKJYC1RJdxk9rWNxcdXlgtCE2eLsSGy"	
 	print(predict(model, image_url),"should be monkeypox")
+
+
+	print("Going for local images")
+	image_url="/Users/ashhadulislam/projects/other_misc/hackerEarth/daisi/some_pox_data/Monkeypox-dataset-2022-master/arranged/Chickenpox/chicken21.jpg"
+	print(predict(model, image_url),"should be chickenpox")	
 
 
 	
