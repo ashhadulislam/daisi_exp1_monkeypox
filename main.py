@@ -51,11 +51,16 @@ def load_model():
     load a model 
     by default it is resnet 18 for now
     '''
+    print("Loading model from torchvision")
     model = models.resnet18(pretrained=True)
+    print("Changing features at final layer")
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, len(classes))
+    print("Changed final layer")
     model.to(device)
+    print("moved to device")
     model.load_state_dict(torch.load(PATH,map_location=device))
+    print("Loaded weights")
     model.eval()
     return model
 
