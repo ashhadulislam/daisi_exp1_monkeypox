@@ -64,7 +64,9 @@ def load_model():
     model.eval()
     return model
 
-
+def bore_model():
+	print("Loading model from torchvision")
+	return None
 
 
 def predict(model, image_url):
