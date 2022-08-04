@@ -48,29 +48,23 @@ data_transform = transforms.Compose([transforms.Grayscale(num_output_channels=1)
 
 def load_model():
     '''
+    to
     load a model 
     by default it is resnet 18 for now
     '''
-    str1="Loading model from torchvision"
     model = models.resnet18(pretrained=True)
-    str1="Changing features at final layer"
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, len(classes))
-    str1="Changed final layer"
     model.to(device)
-    str1="moved to device"
     model.load_state_dict(torch.load(PATH,map_location=device))
-    str1="Loaded weights"
     model.eval()
-    return str1
+    return model
 
-def bore_model():
-	print("Loading model from torchvision")
-	return None
 
 
 def predict(model, image_url):
     '''
+    to
     pass the model and image url to the function
     Returns: a list of pox types with decreasing probability
     '''
