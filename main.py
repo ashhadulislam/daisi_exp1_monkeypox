@@ -51,18 +51,18 @@ def load_model():
     load a model 
     by default it is resnet 18 for now
     '''
-    print("Loading model from torchvision")
+    str1="Loading model from torchvision"
     model = models.resnet18(pretrained=True)
-    print("Changing features at final layer")
+    str1="Changing features at final layer"
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, len(classes))
-    print("Changed final layer")
+    str1="Changed final layer"
     model.to(device)
-    print("moved to device")
+    str1="moved to device"
     model.load_state_dict(torch.load(PATH,map_location=device))
-    print("Loaded weights")
+    str1="Loaded weights"
     model.eval()
-    return model
+    return str1
 
 def bore_model():
 	print("Loading model from torchvision")
